@@ -1,0 +1,51 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-3">
+            <div class="card mt-3">
+                <div class="card-body">
+                    <form action="/diary/add" method="post" enctype="application/x-www-form-urlencoded">
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label">Default file input example</label>
+                            <input class="form-control" type="text" name="img" id="formFile">
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" name="text"
+                                rows="4"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {{#if allDiary}}
+        {{#each allDiary}}
+        <div class="col-md-6 offset-3">
+            <div class="card mb-5 mt-5">
+                <div class="card-body">
+                    <div class="list-group mb-1">
+                        <a href="#" class="list-group-item list-group-item-action">
+                            <img src="https://img.freepik.com/premium-vector/bearded-man-avatar-man-vector-portrait_9385-36.jpg"
+                                class="rounded-circle float-start" style="height: 30px;" alt="...">
+                            <h5 class="card-title">{{users.fullName}}</h5>
+                        </a>
+                    </div>
+                    <p class="card-text">{{text}}</p>
+                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                </div>
+                <img src="{{img}}" class="card-img-bottom" alt="...">
+                <div class="card-footer">
+                    <a href="/diary/by/{{id}}" type="button" class="btn btn-success">Open</a>
+                    <a href="/diary/update{{id}}" type="button" class="btn btn-primary">Update</a>
+                    <a href="#" type="button" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <h1 style="text-align: center; margin-top: 1rem">Diary is Empty</h1>
+        {{/if}}
+    </div>
+</div>

@@ -1,0 +1,57 @@
+{{#if newData}}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-3">
+      <div class="card mb-5 mt-5">
+        <div class="card-body">
+          <div class="list-group mb-1">
+            <a href="#" class="list-group-item list-group-item-action">
+              <img src="https://img.freepik.com/premium-vector/bearded-man-avatar-man-vector-portrait_9385-36.jpg"
+                class="rounded-circle float-start" style="height: 30px;" alt="...">
+              <h5 class="card-title">{{newData.users.fullName}}</h5>
+            </a>
+          </div>
+          <p class="card-text">{{newData.text}}</p>
+          <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+        </div>
+        <img src={{newData.img}} class="card-img-bottom" alt="...">
+      </div>
+    </div>
+  </div>
+  {{!-- form Comment --}}
+  <div class="container " style="width: 50%; margin-bottom: 3rem">
+    <form action="/commint/add" method="post" enctype="application/x-www-form-urlencoded">
+      <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">Add Comment</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" name="commint" rows="4"></textarea>
+        <input type="hidden" name="id" value={{newData.id}}>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+  {{!-- Commint Card --}}
+  {{#each newData.commints}}
+  <div class="row">
+    <div class="col-md-8 offset-2">
+      <div class="card mb-3">
+        <div class="row g-0" style="justify-content: center">
+          <div class="col-md-4">
+            <img src="https://img.freepik.com/premium-vector/bearded-man-avatar-man-vector-portrait_9385-36.jpg"
+              class="img-fluid rounded-start" alt="..." style="width: 160px;">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+              <h5 class="card-title">{{userName}}</h5>
+              <p class="card-text">{{commint}}</p>
+              <p class="card-text"><small class="text-body-secondary">{{createdAdd}}</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</div>
+{{else}}
+<h1>No Diary</h1>
+{{/if}}
