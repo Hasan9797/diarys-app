@@ -18,7 +18,8 @@ router.get('/logout', logOut);
 router.get('/regester', regesterPage);
 router.post('/regester', regester);
 router.post('/login', login);
-// router.post('/update', updateDairy);
+router.get('/get/update', getByUpdate);
+router.post('/update', updateUser);
 // router.delete('/delete', deleteDairy);
 
 module.exports = router;

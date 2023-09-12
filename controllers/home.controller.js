@@ -10,7 +10,6 @@ const getHomePage = async (req, res) => {
 			include: ['users'],
 			nest: true,
 		});
-		console.log(allDiary);
 		res.render('diary/myDiary', {
 			title: 'Home',
 			allDiary: allDiary.reverse(),

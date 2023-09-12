@@ -8,10 +8,8 @@ const getById = async (req, res) => {
 			include: ['commints', 'users'],
 			nest: true,
 		});
-		// const data = await oneDiary.toJSON();
 		const oneDiary = await data.toJSON();
-		const newData = {commints: oneDiary.commints.reverse(), ...oneDiary}
-		console.log(newData);
+		const newData = { commints: oneDiary.commints.reverse(), ...oneDiary };
 		res.render('diary/diary', {
 			title: 'Diary',
 			newData,
@@ -23,7 +21,13 @@ const getById = async (req, res) => {
 };
 const getByUpdate = async (req, res) => {
 	try {
-		const { id } = req.params.id;
+		const mydiary = await diary.findByPk(req.params.id, { raw: true });
+		console.log(mydiary);
+		res.render('diary/edit', {
+			title: 'Update Diary',
+			mydiary,
+			isAuthintecated: req.session.auth ? req.session.auth : false,
+		});
 	} catch (error) {
 		console.log(error);
 	}
@@ -41,7 +45,14 @@ const addDiary = async (req, res) => {
 		console.log(error);
 	}
 };
-const updateDairy = async (req, res) => {};
+const updateDairy = async (req, res) => {
+	try {
+		await diary.update({ text: req.body.text }, { where: { id: req.body.id } });
+		res.redirect('/home');
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 const diaryLenta = async (req, res) => {
 	try {
@@ -61,7 +72,18 @@ const diaryLenta = async (req, res) => {
 		console.log(error);
 	}
 };
-const deleteDairy = async (req, res) => {};
+const deleteDairy = async (req, res) => {
+	try {
+		await diary.destroy({
+			where: {
+				id: req.params.id,
+			},
+		});
+		res.redirect('/home');
+	} catch (error) {
+		console.log(error);
+	}
+};
 
 module.exports = {
 	getById,

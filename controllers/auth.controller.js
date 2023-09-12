@@ -1,16 +1,33 @@
 const { users } = require('../model/index');
+const { diary } = require('../model/index');
 const getUser = async (req, res) => {
 	try {
-		const user = await users.findByPk(req.session.user.id, { raw: true });
+		// const myDiary = await diary.findAll({
+		// 	raw: true,
+		// 	where: { userId: req.session.user.id },
+		// });
+
+		const data = await users.findByPk(req.session.user.id, {
+			raw: false,
+			plain: true,
+			include: ['diary'],
+			nest: true,
+		});
+		const user = data.toJSON();
+		const newUser = {
+			length: user.diary.length,
+			...user,
+		};
 		res.render('auth/profile', {
 			title: 'Profile',
 			isAuthintecated: req.session.auth,
-			user,
+			newUser,
 		});
 	} catch (error) {
 		console.log(error);
 	}
 };
+
 const regester = async (req, res) => {
 	try {
 		const { fullName, email, password } = req.body;
@@ -65,7 +82,16 @@ const login = async (req, res) => {
 		console.log(error);
 	}
 };
-const getByUpdate = async (req, res) => {};
+const getByUpdate = async (req, res) => {
+	const user = await users.findByPk(req.session.user.id, {
+		raw: true,
+	});
+	res.render('auth/profile-update', {
+		title: 'Update Profile',
+		user,
+		isAuthintecated: req.session.auth ? req.session.auth : false,
+	});
+};
 
 const logOut = async (req, res) => {
 	try {
@@ -75,7 +101,14 @@ const logOut = async (req, res) => {
 		console.log(error);
 	}
 };
-const updateUser = async (req, res) => {};
+const updateUser = async (req, res) => {
+	const update = await users.update(req.body, {
+		where: {
+			id: req.session.user.id,
+		},
+	});
+	res.redirect('/profile/user');
+};
 const deleteUser = async (req, res) => {};
 
 module.exports = {

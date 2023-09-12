@@ -14,6 +14,6 @@ router.get('/update/:id', verfiyAuth, getByUpdate);
 router.post('/add', verfiyAuth, addDiary);
 router.post('/update', verfiyAuth, updateDairy);
 router.get('/lenta', verfiyAuth, diaryLenta);
-router.delete('/delete', verfiyAuth, deleteDairy);
+router.get('/delete/:id', verfiyAuth, deleteDairy);
 
 module.exports = router;

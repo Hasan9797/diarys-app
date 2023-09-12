@@ -1,19 +1,28 @@
-
-  <div class="container">
-    <div class="row">
-      <div class="col-md-6 offset-3">
-        <div class="card mt-3">
-          <div class="card-body">
-            <form action="" method="post">
-              <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Example textarea</label>
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="4">old text</textarea>
-              </div>
-              <img src="https://phantom-marca.unidadeditorial.es/2ea6e12383f40dce693cb8c7d14081a3/resize/1320/f/jpg/assets/multimedia/imagenes/2022/12/10/16706269918207.jpg" class="card-img-bottom" alt="...">
-              <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-          </div>
+{{#if mydiary}}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-3">
+      <div class="card mt-3">
+        <div class="card-body">
+          <form action="/diary/update" method="post" enctype="application/x-www-form-urlencoded">
+            {{#if mydiary.img}}
+            <div class="mb-3">
+              <img src={{mydiary.img}} class="card-img-bottom" alt="...">
+            </div>
+            {{/if}}
+            <div class="mb-3">
+              <label for="text" class="form-label">Example textarea</label>
+              <textarea class="form-control" id="tex" name="text" rows="4">{{mydiary.text}}</textarea>
+            </div>
+            <input type="hidden" name="id" value={{mydiary.id}}>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+{{else}}
+<h1>is not empty</h1>
+{{/if}}
