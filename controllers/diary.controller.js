@@ -34,9 +34,9 @@ const getByUpdate = async (req, res) => {
 };
 const addDiary = async (req, res) => {
 	try {
-		const { img, text } = req.body;
-		const newDiary = await diary.create({
-			img: img,
+		const { text } = req.body;
+		await diary.create({
+			img: '/upload/' + req.file.filename, // ./piblic/upload/img-1694542948911-.png
 			text: text,
 			userId: req.session.user.id,
 		});

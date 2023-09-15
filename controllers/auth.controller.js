@@ -31,6 +31,13 @@ const getUser = async (req, res) => {
 const regester = async (req, res) => {
 	try {
 		const { fullName, email, password } = req.body;
+		const user = await users.findOne({ raw: true, where: { email: email } });
+		if (user) {
+			return res.render('auth/registration', {
+				title: 'Regester',
+				error: 'User Authentication',
+			});
+		}
 		const addUsers = await users.create({
 			fullName: fullName,
 			email: email,
@@ -60,13 +67,14 @@ const regesterPage = async (req, res) => {
 const login = async (req, res) => {
 	try {
 		const { email, password } = req.body;
-		console.log(email);
 		const user = await users.findOne({ raw: true, where: { email: email } });
-		console.log(user);
-		if (!user) {
+		const emailRegexp =
+			/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+		const cheackEmail = emailRegexp.test(email);
+		if (!user || !cheackEmail) {
 			return res.render('auth/login', {
 				title: 'Login',
-				message: 'User is not defined',
+				message: 'User is not defined or email is valid',
 			});
 		}
 		if (user.password !== password) {

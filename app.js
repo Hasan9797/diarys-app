@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const path = require('path');
 const { engine } = require('express-handlebars');
 const session = require('express-session');
 const pgConnect = require('connect-pg-simple')(session);
@@ -8,6 +9,7 @@ const pool = require('./config/connect');
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); //Buffer buni Object o'girarkanman
+app.use(express.static(path.join(__dirname, './public')));
 
 app.use(
 	session({
@@ -19,6 +21,7 @@ app.use(
 );
 const { sequelize } = require('./model/index');
 //Routers
+
 const homeRouter = require('./routes/home');
 const userRouter = require('./routes/user');
 const diaryRouter = require('./routes/diary');
