@@ -63,6 +63,7 @@ const diaryLenta = async (req, res) => {
 			include: ['users'],
 			nest: true,
 		});
+		allDiary.reverse();
 		res.render('diary/lenta', {
 			title: 'Lenta',
 			allDiary,
